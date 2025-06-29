@@ -1,103 +1,136 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { deleteDataCostumer } from "@/action/constumers";
+import { constumersSchema } from "@/db/schema";
+import {
+  useDeleteCostumer,
+  useGetDataConstumers,
+} from "@/hook/construmersQuerie";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+
+import React, { use } from "react";
+
+type props = typeof constumersSchema.$inferInsert;
+export default function GetDataAll() {
+  const querieCLien = useQueryClient();
+  const { data, isLoading, error } = useGetDataConstumers();
+  const mutation = useDeleteCostumer();
+  const router = useRouter();
+  const handleDeleteUser = async ({ id }: { id: number }) => {
+    try {
+      await mutation.mutateAsync({ id });
+      await querieCLien.invalidateQueries({ queryKey: ["getConstumers"] });
+      console.log("constumer berhasil di hapus");
+    } catch (error) {
+      console.log("persan error", error);
+    }
+  };
+
+  const handleEditUser = (id: number) => {
+    router.push(`/componets/constumers/${id}`);
+  };
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+    <div className="bg-white">
+      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="https://flowbite.com"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            <img
+              src="https://flowbite.com/docs/images/logo.svg"
+              className="h-8"
+              alt="Flowbite Logo"
             />
-            Deploy now
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              Flowbite
+            </span>
           </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          <div className="flex items-center space-x-6 rtl:space-x-reverse">
+            <a
+              href="tel:5541251234"
+              className="text-sm  text-gray-500 dark:text-white hover:underline"
+            >
+              (555) 412-1234
+            </a>
+            <a
+              href="#"
+              className="text-sm  text-blue-600 dark:text-blue-500 hover:underline"
+            >
+              Login
+            </a>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </nav>
+      <nav className="bg-gray-50 dark:bg-gray-700">
+        <div className="max-w-screen-xl px-4 py-3 mx-auto">
+          <div className="flex items-center">
+            <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-900 dark:text-white hover:underline"
+                  aria-current="page"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-900 dark:text-white hover:underline"
+                >
+                  Company
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-900 dark:text-white hover:underline"
+                >
+                  Team
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-900 dark:text-white hover:underline"
+                >
+                  Features
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div className="p-4">
+        <ul className="space-y-4">
+          {data?.map((user, index) => (
+            <li
+              key={index}
+              className="flex justify-between items-center p-4 border rounded-md shadow-sm"
+            >
+              <span className="text-gray-800">{user.name}</span>
+              <div className="space-x-2">
+                <button
+                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  onClick={() => handleEditUser(user.id!)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  onClick={() => handleDeleteUser({ id: user.id })}
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

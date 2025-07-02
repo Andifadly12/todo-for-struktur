@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { ConstumerInsert, constumersSchema } from "./schema";
+import { CustomerInsert, CustomersSchema } from "./schema";
 import { db } from "./drizzle";
 
-export function createRandomConstumer(): ConstumerInsert {
+export function createRandomcustomer(): CustomerInsert {
   return {
     name: faker.person.fullName(),
     tempatLahir: faker.location.city(),
@@ -17,6 +17,6 @@ export function createRandomConstumer(): ConstumerInsert {
 }
 
 for (let i = 0; i < 50; i++) {
-  const data = createRandomConstumer();
-  db.insert(constumersSchema).values(data).run();
+  const data = createRandomcustomer();
+  db.insert(CustomersSchema).values(data).run();
 }

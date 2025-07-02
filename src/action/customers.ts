@@ -1,14 +1,14 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { constumersSchema } from "@/db/schema";
+import { CustomersSchema } from "@/db/schema";
 import { eq } from "drizzle-orm";
-export const getDataConstumers = async () => {
-  const data = await db.select().from(constumersSchema);
+export const getDataCustomers = async () => {
+  const data = await db.select().from(CustomersSchema);
   return data;
 };
 
-export const postDataConstumer = async (
+export const postDataCustomer = async (
   name: string,
   tempatLahir: string,
   tanggalLahir: string,
@@ -18,7 +18,7 @@ export const postDataConstumer = async (
 ) => {
   // Convert File to string (e.g., base64 or URL) or set to null
 
-  const result = await db.insert(constumersSchema).values({
+  const result = await db.insert(CustomersSchema).values({
     name,
     tempatLahir,
     tanggalLahir,
@@ -29,23 +29,23 @@ export const postDataConstumer = async (
   return result;
 };
 
-export const deleteDataCostumer = async (id: number) => {
+export const deleteDataCustomer = async (id: number) => {
   const result = await db
-    .delete(constumersSchema)
-    .where(eq(constumersSchema.id, id));
+    .delete(CustomersSchema)
+    .where(eq(CustomersSchema.id, id));
   return result;
 };
 
-export const getDataByIdConstumer = async (id: number) => {
+export const getDataByIdCustomer = async (id: number) => {
   const result = await db
     .select()
-    .from(constumersSchema)
-    .where(eq(constumersSchema.id, id))
+    .from(CustomersSchema)
+    .where(eq(CustomersSchema.id, id))
     .get();
   return result;
 };
 
-export const editDataCoustumers = async (
+export const editDataCustomer = async (
   id: number,
   name: string,
   tempatLahir: string,
@@ -55,8 +55,8 @@ export const editDataCoustumers = async (
   email: string
 ) => {
   const result = await db
-    .update(constumersSchema)
+    .update(CustomersSchema)
     .set({ name, tempatLahir, tanggalLahir, alamat, noTelp, email })
-    .where(eq(constumersSchema.id, id));
+    .where(eq(CustomersSchema.id, id));
   return result;
 };

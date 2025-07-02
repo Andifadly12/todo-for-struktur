@@ -1,27 +1,25 @@
 "use client";
 
-import { deleteDataCostumer } from "@/action/constumers";
-import { constumersSchema } from "@/db/schema";
-import {
-  useDeleteCostumer,
-  useGetDataConstumers,
-} from "@/hook/construmersQuerie";
+import { deleteDataCustomer } from "@/action/customers";
+import { CustomersSchema } from "@/db/schema";
+import { useDeleteCustomer, useGetDataCustomers } from "@/hook/customers";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import React, { use } from "react";
 
-type props = typeof constumersSchema.$inferInsert;
+type props = typeof CustomersSchema.$inferInsert;
 export default function GetDataAll() {
   const querieCLien = useQueryClient();
-  const { data, isLoading, error } = useGetDataConstumers();
-  const mutation = useDeleteCostumer();
+  const { data, isLoading, error } = useGetDataCustomers();
+  const mutation = useDeleteCustomer();
   const router = useRouter();
   const handleDeleteUser = async ({ id }: { id: number }) => {
     try {
       await mutation.mutateAsync({ id });
-      await querieCLien.invalidateQueries({ queryKey: ["getConstumers"] });
+      await querieCLien.invalidateQueries({ queryKey: ["getCustomers"] });
       console.log("constumer berhasil di hapus");
+      router.back();
     } catch (error) {
       console.log("persan error", error);
     }

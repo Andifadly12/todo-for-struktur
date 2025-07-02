@@ -1,6 +1,6 @@
 import { integer, text, sqliteTable } from "drizzle-orm/sqlite-core";
 
-export const constumersSchema = sqliteTable("constumers", {
+export const CustomersSchema = sqliteTable("Customers", {
   id: integer("id").primaryKey(),
   name: text("name"),
   tempatLahir: text("tempat_lahir"),
@@ -10,4 +10,4 @@ export const constumersSchema = sqliteTable("constumers", {
   email: text("email"),
 });
 
-export type ConstumerInsert = typeof constumersSchema.$inferInsert;
+export type CustomerInsert = typeof CustomersSchema.$inferInsert;

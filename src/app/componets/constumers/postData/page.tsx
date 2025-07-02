@@ -1,6 +1,7 @@
 "use client";
 
-import { usePostConstumers } from "@/hook/construmersQuerie";
+import { usePostCustomer } from "@/hook/customers";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function PostData() {
@@ -10,8 +11,8 @@ export default function PostData() {
   const [alamat, setAlamat] = React.useState("");
   const [noTelp, setNoTelp] = React.useState("");
   const [email, setEmail] = React.useState("");
-
-  const mutation = usePostConstumers();
+  const router = useRouter();
+  const mutation = usePostCustomer();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +32,7 @@ export default function PostData() {
     setAlamat("");
     setNoTelp("");
     setEmail("");
+    router.back();
   };
 
   return (

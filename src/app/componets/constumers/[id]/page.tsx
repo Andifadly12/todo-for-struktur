@@ -19,10 +19,7 @@
 // }
 "use client";
 
-import {
-  useGetByIdConstumrts,
-  useUpdateConstumers,
-} from "@/hook/construmersQuerie";
+import { useGetByIdCustomer, useUpdateCustomer } from "@/hook/customers";
 import { useRouter } from "next/navigation";
 
 import React, { use } from "react";
@@ -34,8 +31,8 @@ export default function EditCostumers({ params }: Props) {
   const { id } = use(params);
   const idNumber = Number(id);
   const router = useRouter();
-  const { data, isLoading, error } = useGetByIdConstumrts(idNumber);
-  const mutation = useUpdateConstumers();
+  const { data, isLoading, error } = useGetByIdCustomer(idNumber);
+  const mutation = useUpdateCustomer();
   const [name, setName] = React.useState("");
   const [tempatLahir, setTempatLahir] = React.useState("");
   const [tanggalLahir, setTanggalLahir] = React.useState("");

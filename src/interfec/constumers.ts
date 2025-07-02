@@ -1,4 +1,4 @@
-export interface postConsumer {
+export interface postCustomers {
   name: string;
   tempatLahir: string;
   tanggalLahir: string;
